@@ -7,4 +7,4 @@ used Optional for checking null
 used model mapper for mapping dao to dto and vice versa
 added validation on dto
 added validation on endpoints
-added globalexceptionhandler
+added globalexceptionhandlera
