@@ -1,0 +1,19 @@
+
+{
+  "street" : "123",
+  "cty" : "XYZ"
+}
+
+,
+
+{
+
+  "firstName" : "Sumit",
+  "lastName" : "Chauhan",
+        "email" : "chauhansumit@email.dev",
+  "address" : {
+     "street" : "123",
+        "city" : "ABC"
+  }
+
+}

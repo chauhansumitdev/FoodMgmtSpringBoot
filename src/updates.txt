@@ -1,0 +1,10 @@
+removed AOP logging
+corrected versioning
+removed field injection with constructor injection
+added proper column and table annotations on entities
+used @NotBlank in DTO for String types and @NotNull for ref types
+used Optional for checking null
+used model mapper for mapping dao to dto and vice versa
+added validation on dto
+added validation on endpoints
+added globalexceptionhandler
