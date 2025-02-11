@@ -2,16 +2,15 @@ package com.example.demo.controller;
 
 
 import com.example.demo.dto.CustomerDTO;
+import com.example.demo.entity.Customer;
 import com.example.demo.service.CustomerService;
 import jakarta.validation.Valid;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/v1/customers")
@@ -47,6 +46,18 @@ public class CustomerController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteCustomer(@PathVariable Long id){
         customerService.deleteCustomer(id);
-        return new ResponseEntity<>("Customer deleted",HttpStatus.OK);
+        return new ResponseEntity<>("Customer deleted",HttpStatus.NO_CONTENT);
     }
+
+    @GetMapping("/v1/list")
+    public Page<Customer> getCustomers(
+            @RequestParam(defaultValue = "") String firstName,
+            @RequestParam(defaultValue = "") String email,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "firstName") String sortBy) {
+
+        return customerService.getCustomers(firstName, email, page, size, sortBy);
+    }
+
 }

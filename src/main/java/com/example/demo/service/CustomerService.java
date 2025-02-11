@@ -7,10 +7,14 @@ import com.example.demo.exception.CustomerException;
 import com.example.demo.repository.CustomerRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class CustomerService {
@@ -71,5 +75,9 @@ public class CustomerService {
         customerRepository.deleteById(id);
     }
 
+    public Page<Customer> getCustomers(String firstName, String email, int page, int size, String sortBy) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
+        return customerRepository.findByFirstNameContainingIgnoreCaseAndEmailContainingIgnoreCase(firstName, email, pageable);
+    }
 
 }

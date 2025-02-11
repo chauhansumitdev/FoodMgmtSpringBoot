@@ -10,13 +10,25 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(AddressException.class)
-    public ResponseEntity<String> handleRuntimeException(RuntimeException e) {
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    public ResponseEntity<CustomErrorResponse> handleAddressException(RuntimeException e) {
+        CustomErrorResponse customErrorResponse = new CustomErrorResponse(e.getMessage(), 400);
+        return new ResponseEntity<>(customErrorResponse, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(CustomerException.class)
-    public ResponseEntity<String> handleIllegalArgumentException(RuntimeException e) {
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    public ResponseEntity<CustomErrorResponse> handleCustomerException(RuntimeException e) {
+        CustomErrorResponse customErrorResponse = new CustomErrorResponse(e.getMessage(), 400);
+        return new ResponseEntity<>(customErrorResponse, HttpStatus.BAD_REQUEST);
     }
+
+
+    @ExceptionHandler(ProductException.class)
+    public ResponseEntity<CustomErrorResponse> handleProductException(RuntimeException e){
+        CustomErrorResponse customErrorResponse = new CustomErrorResponse(e.getMessage(), 400);
+        return new ResponseEntity<>(customErrorResponse, HttpStatus.BAD_REQUEST);
+    }
+
+
+
 
 }

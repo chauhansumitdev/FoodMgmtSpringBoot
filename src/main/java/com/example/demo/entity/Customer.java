@@ -4,6 +4,7 @@ package com.example.demo.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -31,6 +32,10 @@ public class Customer {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id", nullable = false, referencedColumnName = "id")
     private Address address;
+
+
+    @OneToMany(mappedBy = "customer",cascade = CascadeType.ALL)
+    private List<Order> orders;
 
 
     public Long getId() {
@@ -71,5 +76,13 @@ public class Customer {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 }
