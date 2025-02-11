@@ -2,6 +2,8 @@ package com.example.demo.service;
 
 
 import com.example.demo.dto.OrderDTO;
+import com.example.demo.dto.OrderDTORequest;
+import com.example.demo.dto.OrderDTOResponse;
 import com.example.demo.entity.Customer;
 import com.example.demo.entity.Order;
 import com.example.demo.entity.Product;
@@ -10,6 +12,7 @@ import com.example.demo.exception.OrderException;
 import com.example.demo.repository.CustomerRepository;
 import com.example.demo.repository.OrderRepository;
 import com.example.demo.repository.ProductRepository;
+import org.aspectj.weaver.ast.Or;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -39,7 +42,7 @@ public class OrderService {
         this.productRepository = productRepository;
     }
 
-    public OrderDTO createOrder(OrderDTO orderDTO){
+    public OrderDTOResponse createOrder(OrderDTORequest orderDTO){
 
         Long userID = orderDTO.getCustomerID();
         List<Long> productID = orderDTO.getProductID();
@@ -68,8 +71,14 @@ public class OrderService {
 
             orderRepository.save(order);
 
+            OrderDTOResponse orderDTOResponse = new OrderDTOResponse();
+            orderDTOResponse.setOrderNumber(order.getOrderNumber());
+            orderDTOResponse.setCustomerId(order.getCustomer().getId());
+            orderDTOResponse.setProducts(order.getProducts());
+            orderDTOResponse.setStatus(order.getStatus());
+            orderDTOResponse.setId(order.getId());
 
-            return mapper.map(order, OrderDTO.class);
+            return orderDTOResponse;
 
         }else{
             throw new OrderException("Failed to create order");
@@ -85,7 +94,7 @@ public class OrderService {
         if(existingOrder.isPresent()){
             Order order = existingOrder.get();
 
-            if(order.getStatus().equals("DELIVERED")){
+            if(order.getStatus().equals(Status.DELIVERED.name())){
                 throw  new OrderException("ORDER ALREADY DELIVERED");
             }
             order.setStatus(orderDTO.getStatus());

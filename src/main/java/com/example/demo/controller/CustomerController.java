@@ -49,7 +49,7 @@ public class CustomerController {
         return new ResponseEntity<>("Customer deleted",HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping("/v1/list")
+    @GetMapping("/list")
     public Page<Customer> getCustomers(
             @RequestParam(defaultValue = "") String firstName,
             @RequestParam(defaultValue = "") String email,

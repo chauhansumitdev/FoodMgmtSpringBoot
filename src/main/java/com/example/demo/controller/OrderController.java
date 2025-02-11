@@ -2,6 +2,8 @@ package com.example.demo.controller;
 
 
 import com.example.demo.dto.OrderDTO;
+import com.example.demo.dto.OrderDTORequest;
+import com.example.demo.dto.OrderDTOResponse;
 import com.example.demo.entity.Order;
 import com.example.demo.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +25,8 @@ public class OrderController {
     }
 
     @PostMapping()
-    public ResponseEntity<OrderDTO> createOrder(@RequestBody OrderDTO orderDTO){
-        return new ResponseEntity<>(orderService.createOrder(orderDTO), HttpStatus.CREATED);
+    public ResponseEntity<OrderDTOResponse> createOrder(@RequestBody OrderDTORequest orderDTORequest){
+        return new ResponseEntity<>(orderService.createOrder(orderDTORequest), HttpStatus.CREATED);
     }
 
     @PutMapping("/update")
@@ -34,7 +36,7 @@ public class OrderController {
 
 
     @GetMapping("/{id}")
-    public Page<Order> getOrdersByCustomer(@PathVariable Long id, @RequestParam int page, @RequestParam int size){
+    public Page<Order> getOrdersByCustomer(@PathVariable Long id, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){
         return orderService.getOrdersByCustomer(id, page, size);
     }
 

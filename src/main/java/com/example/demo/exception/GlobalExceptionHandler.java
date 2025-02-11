@@ -28,7 +28,10 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(customErrorResponse, HttpStatus.BAD_REQUEST);
     }
 
-
-
+    @ExceptionHandler(OrderException.class)
+    public ResponseEntity<CustomErrorResponse> handleOrderException(RuntimeException e){
+        CustomErrorResponse customErrorResponse = new CustomErrorResponse(e.getMessage(), 400);
+        return new ResponseEntity<>(customErrorResponse, HttpStatus.BAD_REQUEST);
+    }
 
 }
