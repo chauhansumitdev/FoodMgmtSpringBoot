@@ -19,4 +19,7 @@
 
 - using Long instead of UUID as H2 does not support UUID GenerationType = Identity 
 
+- added pagination 
+
+
 ![image](https://github.com/user-attachments/assets/1e6eb61a-32e8-4aa6-90b4-27efa49d4375)
